@@ -1,2 +1,4 @@
-# chatbot-pytorch-nlp
-### WIP - continue with this project after finishing another project at https://github.com/moaaz-ashour/django-blog
+# Chatbot with PyTorch and NLP :rocket:
+WIP - will continue after finishing [another project](https://github.com/moaaz-ashour/django-blog). 
+
+For Chatbot project board click [here](https://github.com/users/moaaz-ashour/projects/3).
