@@ -22,3 +22,16 @@ ignored_characters = ['?', "!", '.', ',']
 all_words = [stem(word) for word in all_words if word not in ignored_words]
 # remove duplicates and sort the list
 all_words = sorted(set(all_words))
+
+# create bag of words
+x_train = []  # for bag of words
+y_train = []  # associated number for each tag
+
+# iterate over (patterns, tags)
+for (tokenized_pattern, tag) in xy:
+    bag = bag_of_words(tokenized_pattern, all_words)
+    x_train.append(bag)
+
+    # get index of each tag (label them) and append to y_train
+    label = tags.index(tag)
+    y_train.append(label)  # we want only the class labels (cross-entropy loss)
