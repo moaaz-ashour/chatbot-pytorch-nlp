@@ -1,5 +1,6 @@
 import json
 from nltk_utils import tokenize, stem, bag_of_words
+import numpy as np
 
 with open('intents.json') as f:
     intents = json.load(f)
@@ -35,3 +36,7 @@ for (tokenized_pattern, tag) in xy:
     # get index of each tag (label them) and append to y_train
     label = tags.index(tag)
     y_train.append(label)  # we want only the class labels (cross-entropy loss)
+
+# convert the training data to numpy array
+X_train = np.array(x_train)
+y_train = np.array(y_train)
