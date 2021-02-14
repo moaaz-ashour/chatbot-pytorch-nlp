@@ -78,3 +78,6 @@ train_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True, 
 device = torch.device('cuda', if torch.cuda.is_available() else 'cpu')
 # create model and push it to device if available
 model = NeuralNet(input_size, hidden_size, output_size).to(device)
+
+# loss
+criterion = nn.CrossEntropyLoss()
