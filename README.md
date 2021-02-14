@@ -1,3 +1,5 @@
 # Chatbot with PyTorch and NLP :rocket:
 
-For Chatbot project board click [here](https://github.com/users/moaaz-ashour/projects/3).
+##### Project currently in progress!
+
+##### For project board click [here](https://github.com/users/moaaz-ashour/projects/3).
