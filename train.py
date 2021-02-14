@@ -20,7 +20,7 @@ for intent in intents['intents']:
 ignored_characters = ['?', "!", '.', ',']
 
 # apply stemming to tokenized all_words list and excluding ignored_words
-all_words = [stem(word) for word in all_words if word not in ignored_words]
+all_words = [stem(word) for word in all_words if word not in ignored_characters]
 # remove duplicates and sort the list
 all_words = sorted(set(all_words))
 
