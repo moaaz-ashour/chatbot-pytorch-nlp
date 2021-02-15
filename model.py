@@ -10,13 +10,13 @@ class NeuralNet(nn.Module):
         self.l3 = nn.Linear(hidden_size, num_classes)
         self.relu = nn.ReLU()
 
-        # forward pass
-        def forward(self, x):
-            out = self.l1(x)
-            out = self.relu(out)
-            out = self.l2(out)
-            out = self.relu(out)
-            out = self.l3(out)
-            out = self.relu(out)
+    # forward pass
+    def forward(self, x):
+        out = self.l1(x)
+        out = self.relu(out)
+        out = self.l2(out)
+        out = self.relu(out)
+        out = self.l3(out)
+        out = self.relu(out)
 
-            return out
+        return out
