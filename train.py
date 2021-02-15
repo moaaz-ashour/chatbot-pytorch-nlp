@@ -84,3 +84,29 @@ model = NeuralNet(input_size, hidden_size, output_size).to(device)
 # loss and optimzer
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+
+
+# training loop
+    for epoch in range(num_epochs):
+        # use training loader
+        for (words, labels) in train_loader:
+            words = words.to(device)
+            labels = labels.to(device)
+            # forward pass - words from training loader as input
+            outputs = model(words)
+
+            # calculate loss
+            loss = criterion(outputs, labels.long())
+
+            # backward pass and optimizer step
+            # 1. empty the gradient
+            optimizer.zero_grad()
+            # 2.1 calculate back propagation  
+            loss.backward()
+            # 2.2 parameter update based on parameter.grad using internally stored grad to update parameters values.
+            optimizer.step()
+
+        if (epoch +1) % 100 == 0:
+            print(f"epoch {epoch+1}/{num_epochs}, loss={loss.item():.4f}")
+
+    print(f"final loss={loss.item():.4f}")
