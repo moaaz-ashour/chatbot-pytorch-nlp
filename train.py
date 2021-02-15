@@ -65,28 +65,34 @@ class ChatDataset(Dataset):
 
 dataset = ChatDataset()
 
-# Hyperparameters:
-batch_size = 8
-input_size = len(X_train[0]) #> first bag of words length > all_words
-hidden_size = 8
-output_size = len(tags)
-learning_rate = 0.001
-num_epochs = 1000
+def main():
+    # Hyperparameters:
+    batch_size = 8
+    input_size = len(X_train[0]) #> first bag of words length > all_words
+    hidden_size = 8
+    output_size = len(tags)
+    learning_rate = 0.001
 
-# create DataLoader
-train_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True, num_workers=2)
+    # check if CUDA is available
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-# check if CUDA is available
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-# create model and push it to device if available
-model = NeuralNet(input_size, hidden_size, output_size).to(device)
+    # create DataLoader
+    train_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True, num_workers=0)
 
-# loss and optimzer
-criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+    # create model and push it to device if available
+    model = NeuralNet(input_size, hidden_size, output_size).to(device)
 
+    # loss and optimzer
+    criterion = nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
-# training loop
+    # training
+    training(device, train_loader, model, criterion, optimizer)
+
+def training(device, train_loader, model, criterion, optimizer):
+    num_epochs = 1000
+
+    # training loop
     for epoch in range(num_epochs):
         # use training loader
         for (words, labels) in train_loader:
@@ -110,3 +116,6 @@ optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
             print(f"epoch {epoch+1}/{num_epochs}, loss={loss.item():.4f}")
 
     print(f"final loss={loss.item():.4f}")
+
+if __name__ == '__main__':
+    main()
