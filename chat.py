@@ -54,8 +54,17 @@ while True:
     _, predicted = torch.max(output, dim=1)
     # get actual tag
     tag = tags[predicted.item()] # tags[class_label_number], e.g. greeting
-    # find corresponding intent by looping over intents and check if tags matches
-    for intent in intents["intents"]:
-        if tag == intent["tag"]:
-            # possible response
-            print(f"{bot_name}: {random.choice(intent['responses'])}")
+
+    # check if probability of tags is high enough by applying softmax() on raw output along dimension 1
+    probs = torch.softmax(output, dim=1)
+    # now the actual prob for the predicted tag
+    prob = probs[0][predicted.item()]
+
+    if prob.item() > 0.75:      
+        # find corresponding intent by looping over intents and check if tags matches
+        for intent in intents["intents"]:
+            if tag == intent["tag"]:
+                # possible response
+                print(f"{bot_name}: {random.choice(intent['responses'])}")
+    else:
+        print(f"{bot_name}: I do not understand...")
