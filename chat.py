@@ -28,3 +28,13 @@ model = NeuralNet(input_size, hidden_size, output_size).to(device)
 model.load_state_dict(model_state_dict)
 # set to evaluation mode
 model.eval()
+
+
+# implement ChatBot
+bot_name = "Chat Bot"
+print("Let's Chat! type 'quit' to exit")
+
+While True:
+    sentence = input("You: ")
+    if sentence == "quit":
+        break
