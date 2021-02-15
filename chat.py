@@ -31,7 +31,7 @@ model.eval()
 
 
 # implement ChatBot
-bot_name = "Chat Bot"
+bot_name = "Pandora"
 print("Let's Chat! type 'quit' to exit")
 
 while True:
@@ -42,14 +42,14 @@ while True:
     # tokenize sentence:
     tok_sentence = tokenize(sentence)
     # create an array of bag of words with tokenized sentence and words from the saved file
-    x = bag_of_words(tok_sentence, all_words)
+    X = bag_of_words(tok_sentence, all_words)
     # reshapeing to 1 row (i.e. 1 sample) and 1 column [54]
-    x = x.reshape(1, x.shape[0])
+    X = X.reshape(1, X.shape[0])
     # convert it to torch tensor
-    x = torch.from_numpy()
+    X = torch.from_numpy(X).to(device)
 
     # pass data as model input to get predictions
-    output = model(x)
+    output = model(X)
     # getting predictions
     _, predicted = torch.max(output, dim=1)
     # get actual tag
@@ -58,4 +58,4 @@ while True:
     for intent in intents["intents"]:
         if tag == intent["tag"]:
             # possible response
-            print(f"{bot_name}: {random.choice(intent["responses"])}")
+            print(f"{bot_name}: {random.choice(intent['responses'])}")
