@@ -77,7 +77,7 @@ num_epochs = 1000
 train_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True, num_workers=2)
 
 # check if CUDA is available
-device = torch.device('cuda', if torch.cuda.is_available() else 'cpu')
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # create model and push it to device if available
 model = NeuralNet(input_size, hidden_size, output_size).to(device)
 
