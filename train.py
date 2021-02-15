@@ -65,14 +65,16 @@ class ChatDataset(Dataset):
 
 dataset = ChatDataset()
 
-def main():
-    # Hyperparameters:
-    batch_size = 8
-    input_size = len(X_train[0]) #> first bag of words length > all_words
-    hidden_size = 8
-    output_size = len(tags)
-    learning_rate = 0.001
+    
+# Hyperparameters:
+batch_size = 8
+input_size = len(X_train[0]) #> first bag of words length > all_words
+hidden_size = 8
+output_size = len(tags)
+learning_rate = 0.001
+num_epochs = 1000
 
+def main():
     # check if CUDA is available
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -86,12 +88,9 @@ def main():
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
-    # training
-    training(device, train_loader, model, criterion, optimizer)
+    return device, train_loader, model, criterion, optimizer
 
 def training(device, train_loader, model, criterion, optimizer):
-    num_epochs = 1000
-
     # training loop
     for epoch in range(num_epochs):
         # use training loader
@@ -117,5 +116,24 @@ def training(device, train_loader, model, criterion, optimizer):
 
     print(f"final loss={loss.item():.4f}")
 
+# storing data
+def save_data(model, optimizer):
+    data = {
+        "model_state_dict": model.state_dict(),
+        'optimizer_state_dict': optimizer.state_dict(),
+        "input_size": input_size,
+        "output_size": output_size,
+        "hidden_size": hidden_size,
+        "all_words": all_words,
+        "tags": tags
+    }
+
+    FILE = "data.pth"
+    torch.save(data, FILE)
+    print(f"training complete. File saved to {FILE}")
+
+
 if __name__ == '__main__':
-    main()
+    device, train_loader, model, criterion, optimizer = main()
+    training(device, train_loader, model, criterion, optimizer)
+    save_data(model, optimizer)
